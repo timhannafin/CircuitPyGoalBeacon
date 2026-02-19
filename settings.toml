@@ -1,0 +1,20 @@
+WIFI_NAME = "MY_WIFI"
+WIFI_PASSWORD = "password1234"
+
+LOCAL_TIME_ZONE = "US/Eastern"
+WATCH_TEAM_CODE = "BOS"
+MY_CHANNELS = "NESN,HBO MAX,TNT,NBCSP,ESPN"
+
+TIME_DEBUG_MODE = "False"
+GAME_WATCH_DEBUG_MODE = "False"
+NTP_SERVER_LIST = "us.pool.ntp.org,time.nist.gov,time.google.com"
+API_BASE = "https://api-web.nhle.com/v1"
+
+GOAL_ALERT_LENGTH = 20
+GOAL_ALERT_COLOR_1 = 0x000000
+GOAL_ALERT_COLOR_2 = 0xFFFF00
+
+LOCAL_TIMEZONE_OFFSET=-1800
+SYNC_TIMEZONE_WITH_API="False"
+TIMEZONE_API = "https://world-time-api3.p.rapidapi.com/timezone/"
+TIMEZONE_API_KEY = ""
