@@ -1,32 +1,30 @@
-import adafruit_requests
-from adafruit_datetime import timedelta, timezone, datetime, date
-import board
-import displayio
-import adafruit_ntp
-import terminalio
-import displayio
-import board
-import rtc
-import ipaddress
-import ssl
-import wifi
-import socketpool
-import json
-import time
-import math
-import random
-import bitmaptools
-import digitalio
-
-from adafruit_display_text import label
-from adafruit_display_shapes.rect import Rect
 from adafruit_bitmap_font import bitmap_font
-import adafruit_logging as logging
-from fourwire import FourWire
-import adafruit_logging as logging
-import os
+from adafruit_datetime import timedelta, timezone, datetime, date
+from adafruit_display_shapes.rect import Rect
+from adafruit_display_text import label
 from adafruit_st7789 import ST7789
+from fourwire import FourWire
+
 import adafruit_imageload
+import adafruit_logging as logging
+import adafruit_ntp
+import adafruit_requests
+import bitmaptools
+import board
+import digitalio
+import displayio
+import ipaddress
+import json
+import math
+import os
+import random
+import rtc
+import socketpool
+import ssl
+import terminalio
+import time
+import wifi
+
 
 class CONFIG_VALUES:
     false = 'False'
