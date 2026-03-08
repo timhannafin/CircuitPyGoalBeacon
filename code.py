@@ -109,7 +109,7 @@ class Display:
         self.alertGroup = group = displayio.Group()
         tile_grid = displayio.TileGrid(bitmap, pixel_shader=self.alertPalette)
         self.alertGroup.append(tile_grid)
-
+        self.led.value = False
         return
 
 
@@ -141,8 +141,6 @@ class Display:
     def setDisplayTVText(self, text):
         self.tv_label.text = text
         return
-
-
 
 class ApiRequest:
     def __init__(self, requests, logger=None):
@@ -214,9 +212,14 @@ def setup(debug=False, logger=None):
             headers = { 'x-rapidapi-key': os.getenv(CONFIG.TIMEZONE_API_KEY) }
             tz_info = apiRequest.requestJson(f'{tz_api}/{tz_string}', headers=headers)
             tz_offset = tz_info['raw_offset']
+
+            if datetime.fromisoformat(tz_info['dst_from']) < datetime.now().replace(tzinfo=timezone.utc) < datetime.fromisoformat(tz_info['dst_until']):
+                logger.info(f'DST is in effect')
+                tz_offset = tz_offset + tz_info['dst_offset']
+
         else:
             tz_offset = os.getenv(CONFIG.LOCAL_TIMEZONE_OFFSET)
-
+        logger.info(f'Local timezone offset is {tz_offset} seconds')
     global localTz
     localTz = timezone(offset=timedelta(seconds=int(tz_offset)), name=tz_string)
     localtime = utcToLocalTime(datetime.now())
@@ -412,13 +415,10 @@ def main():
     logger = logging.getLogger('log')
     logger.setLevel(logging.INFO)
 
-
-    setup(logger=logger)
-
-
     global apiRequest
     d = Display()
     d.init()
+    setup(logger=logger)
 
     while True:
         game = getNextGame(apiRequest)
