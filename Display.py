@@ -4,9 +4,9 @@ from adafruit_display_shapes.rect import Rect
 from adafruit_display_text import label
 from adafruit_st7789 import ST7789
 import adafruit_imageload
-
+import time
 import displayio
-import bitmaptools
+
 import digitalio
 import board
 import os
@@ -125,7 +125,11 @@ class Display:
         self.game_label.text = text
         return
 
-    def setDisplayGameTimeText(self, gameDatetime):
+    def setDisplayGameTimeText(self, timeText):
+        self.time_label.text = timeText
+        return
+    
+    def setDisplayGameTimeDatetime(self, gameDatetime):
         self.time_label.text = self.getDateDisplayString(gameDatetime)
         return
 

@@ -1,4 +1,4 @@
-from adafruit_datetime import timedelta, timezone, datetime, date
+from adafruit_datetime import timedelta, timezone, datetime
 
 import adafruit_logging as logging
 import adafruit_ntp
@@ -167,12 +167,11 @@ def setGameDisplayCountdown(display, game):
     startDateTime = utcToLocalTime(startDateTime)
 
     display.setDisplayGameNameText(gameName)
-    display.setDisplayGameTimeText(startDateTime)
+    display.setDisplayGameTimeDatetime(startDateTime)
     display.setDisplayTVText( game['tvBroadcasts'])
     return
 
 def main():
-
     logger = logging.getLogger('log')
     logger.setLevel(logging.INFO)
 
