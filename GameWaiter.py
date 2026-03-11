@@ -33,30 +33,16 @@ class GameWaiter:
         self.logger.info(f'Next game starts at {self.startTime}')
         self.logger.info('Waiting for game to start...')
 
-
-        gameStartDelta = (self.startTime-utcTime)
-
         while self.active:
             sleepTime = 60 #default 1 minute
-            if self.startTime > utcTime:
+            if self.game['gameState'] in ['FUT']:
                 utcTime = datetime.now().replace(tzinfo=timezone.utc)
                 gameStartDelta = (self.startTime - utcTime)
 
                 if self.logger: self.logger.info(f'Game starts in {gameStartDelta}')
 
-                if gameStartDelta < timedelta(hours = 1):
-                    if self.logger: self.logger.info(f'{utcTime.now()} Game is in the next hour')
-                    sleepTime = 60 #game is within an hour only sleep a minute at a time
-                elif gameStartDelta < timedelta(hours = 2):
-                    if self.logger: self.logger.info(f'{utcTime.now()} Game is in next 2 hours')
-                    sleepTime = 1200 #game is within 2 hours sleep 20 minutes at a time
-                elif gameStartDelta < timedelta(days = 1):
-                    if self.logger: self.logger.info(f'{utcTime.now()} Game is today')
-                    sleepTime = 3600 #game is today sleep an hour at a time
-                elif gameStartDelta > timedelta(days = 1):
-                    if self.logger: self.logger.info(f'{utcTime.now()} Game is not today')
-                    sleepTime = 10800 #more than a day away, sleep 3 hours at a time
-                pass
+                sleepTime = round(gameStartDelta.seconds * .25) #sleep for 25% of the interval until the next game
+                if self.logger: self.logger.info(f'Sleep for {sleepTime} seconds')
             else:
                 if self.logger: self.logger.info(f'{utcTime} Game is live')
 
@@ -66,6 +52,8 @@ class GameWaiter:
                 return
 
             time.sleep(sleepTime)
+            self.setGame( self.getNextGame() )
+            self.setGameDisplayCountdown()
 
     def getNextGame(self):
         today = self.utcToLocalTime(datetime.now())
