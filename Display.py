@@ -128,9 +128,13 @@ class Display:
     def setDisplayGameTimeText(self, timeText):
         self.time_label.text = timeText
         return
-    
+
     def setDisplayGameTimeDatetime(self, gameDatetime):
         self.time_label.text = self.getDateDisplayString(gameDatetime)
+        return
+
+    def setDisplayTVString(self, value):
+        self.tv_label.text = value
         return
 
     def setDisplayTVText(self, channelList):

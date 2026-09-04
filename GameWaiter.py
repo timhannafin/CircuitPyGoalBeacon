@@ -20,7 +20,10 @@ class GameWaiter:
 
     def setGame(self, game):
         self.game = game
-        self.startTime = datetime.fromisoformat(f'{self.game['startTimeUTC'][:-1]}+00:00')
+        if self.game == None:
+            self.startTime = None
+        else:
+            self.startTime = datetime.fromisoformat(f'{self.game['startTimeUTC'][:-1]}+00:00')
         return
 
     def Wait(self):
@@ -30,26 +33,29 @@ class GameWaiter:
         if self.debug:
             self.startTime = utcTime
 
-        self.logger.info(f'Next game starts at {self.startTime}')
+
         self.logger.info('Waiting for game to start...')
 
         while self.active:
-            sleepTime = 60 #default 1 minute
-            if self.game['gameState'] in ['FUT']:
-                utcTime = datetime.now().replace(tzinfo=timezone.utc)
-                gameStartDelta = (self.startTime - utcTime)
+            sleepTime = 3600 #long sleep if there was no scheduled game found
+            if self.game != None:
+                sleepTime = 60 #default 1 minute
+                self.logger.info(f'Next game starts at {self.startTime}')
+                if self.game['gameState'] in ['FUT']:
+                    utcTime = datetime.now().replace(tzinfo=timezone.utc)
+                    gameStartDelta = (self.startTime - utcTime)
 
-                if self.logger: self.logger.info(f'Game starts in {gameStartDelta}')
+                    if self.logger: self.logger.info(f'Game starts in {gameStartDelta}')
 
-                sleepTime = round(gameStartDelta.seconds * .25) #sleep for 25% of the interval until the next game
-                if self.logger: self.logger.info(f'Sleep for {sleepTime} seconds')
-            else:
-                if self.logger: self.logger.info(f'{utcTime} Game is live')
+                    sleepTime = round(gameStartDelta.seconds * .25) #sleep for 25% of the interval until the next game
+                    if self.logger: self.logger.info(f'Sleep for {sleepTime} seconds')
+                else:
+                    if self.logger: self.logger.info(f'{utcTime} Game is live')
 
-                self.display.setDisplayGameTimeText('In Progress')
-                watcher = GameWatcher(self.display, self.game, self.team, self.apiRequest, logger=self.logger, debug=self.debug)
-                watcher.Watch()
-                return
+                    self.display.setDisplayGameTimeText('In Progress')
+                    watcher = GameWatcher(self.display, self.game, self.team, self.apiRequest, logger=self.logger, debug=self.debug)
+                    watcher.Watch()
+                    return
 
             time.sleep(sleepTime)
             self.setGame( self.getNextGame() )
@@ -65,15 +71,15 @@ class GameWaiter:
             if game['gameState'] in gameStateList:
                 return game
         return None
-    
+
     def utcToLocalTime(self, utcDatetime):
         return utcDatetime.replace(tzinfo=self.localTz) + self.localTz.utcoffset(utcDatetime)
-    
+
     def setGameDisplayCountdown(self):
         if self.game == None:
             self.display.setDisplayGameNameText('No games found')
             self.display.setDisplayGameTimeText('')
-            self.display.setDisplayTVText( '' )
+            self.display.setDisplayTVString( '' )
             return
 
         gameName = f'{self.game['awayTeam']['commonName']['default']} @ {self.game['homeTeam']['commonName']['default']}'
