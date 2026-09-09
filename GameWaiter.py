@@ -1,4 +1,4 @@
-from adafruit_datetime import timedelta, timezone, datetime
+from adafruit_datetime import timedelta, timezone, datetime, date
 import time
 import os
 from Config import CONFIG, CONFIG_VALUES
@@ -64,12 +64,14 @@ class GameWaiter:
     def getNextGame(self):
         today = self.utcToLocalTime(datetime.now())
         today = today.date()
-        scheduleEndpoint = f'{os.getenv(CONFIG.API_BASE)}/club-schedule/{os.getenv(CONFIG.WATCH_TEAM_CODE)}/week/{today.year}-{today.month:02}-{today.day:02}'
-        schedule = self.apiRequest.requestJson(scheduleEndpoint)
-        gameStateList = ['FUT', 'LIVE', 'PRE', 'CRIT']
-        for game in schedule['games']:
-            if game['gameState'] in gameStateList:
-                return game
+        for i in range(0,31,6):
+            today = date.fromordinal(today.toordinal() + i)
+            scheduleEndpoint = f'{os.getenv(CONFIG.API_BASE)}/club-schedule/{os.getenv(CONFIG.WATCH_TEAM_CODE)}/week/{today.year}-{today.month:02}-{today.day:02}'
+            schedule = self.apiRequest.requestJson(scheduleEndpoint)
+            gameStateList = ['FUT', 'LIVE', 'PRE', 'CRIT']
+            for game in schedule['games']:
+                if game['gameState'] in gameStateList:
+                    return game
         return None
 
     def utcToLocalTime(self, utcDatetime):
