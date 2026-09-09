@@ -113,14 +113,6 @@ class Display:
 
         return f'{dateString} @ {timeString}'
 
-    def getTVDisplayString(self, tvBroadcasts):
-        allowedNetworks = os.getenv('MY_CHANNELS').split(',')
-        channelList = []
-        for tv in tvBroadcasts:
-            if tv['network'] in allowedNetworks:
-                channelList.append(tv['network'])
-        return 'On ' + ', '.join(channelList)
-
     def setDisplayGameNameText(self, text):
         self.game_label.text = text
         return
@@ -135,8 +127,4 @@ class Display:
 
     def setDisplayTVString(self, value):
         self.tv_label.text = value
-        return
-
-    def setDisplayTVText(self, channelList):
-        self.tv_label.text = self.getTVDisplayString(channelList)
         return

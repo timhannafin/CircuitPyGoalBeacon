@@ -16,6 +16,7 @@ class GameWaiter:
         self.localTz = localTz
         self.setGame( self.getNextGame() )
         self.setGameDisplayCountdown()
+        self.TeamHomeAway = 'homeTeam'
         return
 
     def setGame(self, game):
@@ -24,6 +25,7 @@ class GameWaiter:
             self.startTime = None
         else:
             self.startTime = datetime.fromisoformat(f'{self.game['startTimeUTC'][:-1]}+00:00')
+            self.TeamHomeAway = 'awayTeam' if game['awayTeam']['abbrev'] == self.team else 'homeTeam'
         return
 
     def Wait(self):
@@ -89,7 +91,19 @@ class GameWaiter:
         startDateTime = datetime.fromisoformat(f'{self.game['startTimeUTC'][:-1]}+00:00')
         startDateTime = self.utcToLocalTime(startDateTime)
 
+        tvMarket = 'H' if self.TeamHomeAway=='homeTeam' else 'A'
+        channelList = []
+        for tv in self.game['tvBroadcasts']:
+            if tv['market'] == tvMarket:
+                channelList.append(tv['network'])
+            if tv['market'] == 'N' and tv['countryCode']==CONFIG.COUNTRY_CODE:
+                channelList.append(tv['network'])
+
+        tvString = ''
+        if len(channelList) > 0:
+            tvString = 'On ' + ', '.join(channelList)
+
         self.display.setDisplayGameNameText(gameName)
         self.display.setDisplayGameTimeDatetime(startDateTime)
-        self.display.setDisplayTVText( self.game['tvBroadcasts'])
+        self.display.setDisplayTVString(tvString)
         return
