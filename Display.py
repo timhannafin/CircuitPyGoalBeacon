@@ -128,3 +128,7 @@ class Display:
     def setDisplayTVString(self, value):
         self.tv_label.text = value
         return
+
+    def setBeaconValue(self, value):
+        self.led.value = value
+        return
