@@ -82,7 +82,7 @@ class Display:
 
     def showGoalAlert(self):
         self.led.value = True
-        self.display.root_group = self.alertGroup
+        self.display.root_group = self.alert_group
         for i in range( 1, os.getenv(CONFIG.GOAL_ALERT_LENGTH) ):
             self.alertPalette[0]=self.GOAL_ALERT_COLOR_1
             self.alertPalette[1]=self.GOAL_ALERT_COLOR_2
