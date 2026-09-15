@@ -33,7 +33,10 @@ class GameWaiter:
         utcTime = datetime.now().replace(tzinfo=timezone.utc)
 
         if self.debug:
+            self.logger.info(f'DEBUG MODE IS ENABLED. SIMULATING GAME HAS STARTED.')
             self.start_time = utcTime
+            self.game['gameState'] = 'LIVE'
+            
 
 
         self.logger.info('Waiting for game to start...')
