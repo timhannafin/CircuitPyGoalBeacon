@@ -20,10 +20,10 @@ class Display:
         self.displayHeight = 135
         self.displayWidth = 240
 
-        self.displayGroup = displayio.Group()
-        self.alertGroup = displayio.Group()
-        self.textColor = 0xFFFFFF
-        self.bgColor = 0x000000
+        self.display_group = displayio.Group()
+        self.alert_group = displayio.Group()
+        self.text_color = 0xFFFFFF
+        self.background_color = 0x000000
         self.font = bitmap_font.load_font("/fonts/Helvetica-Bold-16.bdf")
         self.led = digitalio.DigitalInOut(board.A2)
         self.led.direction = digitalio.Direction.OUTPUT
@@ -38,16 +38,13 @@ class Display:
         displayio.release_displays()
 
         spi = board.SPI()
-        tft_cs = board.A0
-        tft_dc = board.A1
-
-        display_bus = FourWire(spi, command=tft_dc, chip_select=tft_cs)
+        display_bus = FourWire(spi, command=board.A1, chip_select=board.A0)
         self.display = ST7789(
             display_bus, rotation=270, width=240, height=135, rowstart=40, colstart=53
         )
 
         self.game_label_background_rectangle = Rect(0, 0, self.displayWidth, math.floor(self.displayHeight*.25), fill=0xFFFF00)
-        self.displayGroup.append(self.game_label_background_rectangle)
+        self.display_group.append(self.game_label_background_rectangle)
 
         placeholder_text = '#' * 25
 
@@ -55,17 +52,17 @@ class Display:
         self.game_label.anchor_point = (0.5, 0.0)
         self.game_label.anchored_position = (self.displayWidth/2, 10)
 
-        self.time_label = label.Label(self.font, text=placeholder_text, color=self.textColor)
+        self.time_label = label.Label(self.font, text=placeholder_text, color=self.text_color)
         self.time_label.anchor_point = (0.0, 0.0)
         self.time_label.anchored_position = (10, 50)
 
-        self.tv_label = label.Label(self.font, text=placeholder_text, color=self.textColor)
+        self.tv_label = label.Label(self.font, text=placeholder_text, color=self.text_color)
         self.tv_label.anchor_point = (0.0, 0.0)
         self.tv_label.anchored_position = (10, 95)
 
-        self.displayGroup.append(self.game_label)
-        self.displayGroup.append(self.time_label)
-        self.displayGroup.append(self.tv_label)
+        self.display_group.append(self.game_label)
+        self.display_group.append(self.time_label)
+        self.display_group.append(self.tv_label)
 
 
         bitmap, self.alertPalette = adafruit_imageload.load(
@@ -73,15 +70,15 @@ class Display:
             bitmap=displayio.Bitmap,
             palette=displayio.Palette
         )
-        self.alertGroup = group = displayio.Group()
+        self.alert_group = group = displayio.Group()
         tile_grid = displayio.TileGrid(bitmap, pixel_shader=self.alertPalette)
-        self.alertGroup.append(tile_grid)
+        self.alert_group.append(tile_grid)
         self.led.value = False
         return
 
 
     def showInfo(self):
-        self.display.root_group = self.displayGroup
+        self.display.root_group = self.display_group
 
     def showGoalAlert(self):
         self.led.value = True
@@ -97,21 +94,21 @@ class Display:
         self.showInfo()
         pass
 
-    def getDateDisplayString(self, displayDatetime):
-        if displayDatetime.date() == datetime.now().date():
-            dateString = 'Today'
+    def getDateDisplayString(self, display_datetime):
+        if display_datetime.date() == datetime.now().date():
+            date_string = 'Today'
         else:
-            pieces = displayDatetime.ctime().split(' ')
+            pieces = display_datetime.ctime().split(' ')
             dayName = pieces[0]
             monthName = pieces[1]
             date = pieces[2] if pieces[2] != '' else pieces[3]
-            dateString = f'{dayName}, {monthName} {date}'
+            date_string = f'{dayName}, {monthName} {date}'
 
-        ampm = 'AM' if displayDatetime.time().hour <= 12 else 'PM'
-        hour = displayDatetime.time().hour if displayDatetime.time().hour <= 12 else displayDatetime.time().hour-12
-        timeString = f'{hour}:{displayDatetime.time().minute:02}{ampm}'
+        ampm = 'AM' if display_datetime.time().hour <= 12 else 'PM'
+        hour = display_datetime.time().hour if display_datetime.time().hour <= 12 else display_datetime.time().hour-12
+        time_string = f'{hour}:{display_datetime.time().minute:02}{ampm}'
 
-        return f'{dateString} @ {timeString}'
+        return f'{date_string} @ {time_string}'
 
     def setDisplayGameNameText(self, text):
         self.game_label.text = text
@@ -121,8 +118,8 @@ class Display:
         self.time_label.text = timeText
         return
 
-    def setDisplayGameTimeDatetime(self, gameDatetime):
-        self.time_label.text = self.getDateDisplayString(gameDatetime)
+    def setDisplayGameTimeDatetime(self, game_datetime):
+        self.time_label.text = self.getDateDisplayString(game_datetime)
         return
 
     def setDisplayTVString(self, value):

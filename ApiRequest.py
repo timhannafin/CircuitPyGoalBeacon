@@ -14,11 +14,11 @@ class ApiRequest:
             self.logger.info(url)
 
         response = self.requests.request('GET', url, stream=True, headers=headers)
-        data_string = ''
+        dataString = ''
         try:
             for p in response.iter_content(chunk_size=1000):
-                data_string += p.decode(encoding)
-            obj = json.loads(data_string)
+                dataString += p.decode(encoding)
+            obj = json.loads(dataString)
         except e:
             self.logger.error(e)
             return None
