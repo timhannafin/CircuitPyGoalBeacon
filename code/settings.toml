@@ -1,18 +1,22 @@
 #User Settings
-WIFI_NAME = "MY_WIFI"
-WIFI_PASSWORD = "password1234"
+WIFI_NAME=""
+WIFI_PASSWORD = ""
+
 LOCAL_TIME_ZONE = "US/Eastern"
 WATCH_TEAM_CODE = "BOS"
-COUNTRY_CODE="US"
+COUNTRY_CODE = "US"
 LOCAL_TIMEZONE_OFFSET=-18000
+TV_CHANNEL_LIST = ""
 
 #Advanced Settings
 GOAL_ALERT_LENGTH = 20
 GOAL_ALERT_COLOR_1 = 0x000000
 GOAL_ALERT_COLOR_2 = 0xFFFF00
-SYNC_TIMEZONE_WITH_API="False"
+
+SYNC_TIMEZONE_WITH_API="False" 
 TIMEZONE_API = "https://world-time-api3.p.rapidapi.com/timezone/"
 TIMEZONE_API_KEY = ""
+
 
 #Developer Settings
 NTP_SERVER_LIST = "us.pool.ntp.org,time.nist.gov,time.google.com"

@@ -36,7 +36,7 @@ class GameWaiter:
             self.logger.info(f'DEBUG MODE IS ENABLED. SIMULATING GAME HAS STARTED.')
             self.start_time = utcTime
             self.game['gameState'] = 'LIVE'
-            
+
 
 
         self.logger.info('Waiting for game to start...')
@@ -94,17 +94,26 @@ class GameWaiter:
         start_datetime = datetime.fromisoformat(f'{self.game['startTimeUTC'][:-1]}+00:00')
         start_datetime = self.utcToLocalTime(start_datetime)
 
-        tvMarket = 'H' if self.is_team_home==True else 'A'
-        channelList = []
-        for tv in self.game['tvBroadcasts']:
-            if tv['market'] == tvMarket:
-                channelList.append(tv['network'])
-            if tv['market'] == 'N' and tv['countryCode']==CONFIG.COUNTRY_CODE:
-                channelList.append(tv['network'])
+        tv_market = 'H' if self.is_team_home==True else 'A'
+        channel_list = []
+        channel_white_list = os.getenv(CONFIG.TV_CHANNEL_LIST)
+
+        if not channel_white_list or channel_white_list is None: #no channel white list defined, get the broadcast for the defined team
+            for tv_broadcast in self.game['tvBroadcasts']:
+                if tv_broadcast['market'] == tv_market:
+                    channel_list.append(tv_broadcast['network'])
+                if tv_broadcast['market'] == 'N' and tv['countryCode']==CONFIG.COUNTRY_CODE:
+                    channel_list.append(tv['network'])
+        else:                                                    #channel white list is defined, only show channels from the list
+            channel_white_list = [channel.strip().lower() for channel in channel_white_list.split(',')]
+            for tv_broadcast in self.game['tvBroadcasts']:
+                if tv_broadcast['network'].lower() in channel_white_list:
+                    channel_list.append(tv_broadcast['network'])
+
 
         tv_string = ''
-        if len(channelList) > 0:
-            tv_string = 'On ' + ', '.join(channelList)
+        if len(channel_list) > 0:
+            tv_string = 'On ' + ', '.join(channel_list)
 
         self.display.setDisplayGameNameText(game_name)
         self.display.setDisplayGameTimeDatetime(start_datetime)
