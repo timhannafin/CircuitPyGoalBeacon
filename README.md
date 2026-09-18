@@ -84,9 +84,9 @@ The overall layout of the connections can be seen here.
 9. Finally, complete the circuit by connecting the light's black wire to the transistor's drain (center) pin.
 
 At this point, your components should look something like this:
-![Photo of the fully wired microprocessor board](https://github.com/timhannafin/CircuitPyGoalBeacon/blob/images/QT Py wired.jpg)
-![Photo of the fully wired display board](https://github.com/timhannafin/CircuitPyGoalBeacon/blob/images/Display wired.jpg)
-![Photo of the fully wired light with the transistor attached](images/Light with transistor.jpg)
+![Photo of the fully wired microprocessor board](https://github.com/timhannafin/CircuitPyGoalBeacon/blob/images/QT_Py_wired.jpg)
+![Photo of the fully wired display board](/images/Display_wired.jpg)
+![Photo of the fully wired light with the transistor attached](images/Light_with_transistor.jpg)
 
 6. Connect the two ends of the 3-pin connector.
 
