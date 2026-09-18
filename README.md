@@ -121,7 +121,7 @@ Your display should now show an error message that the settings.toml is invalid 
 
 #### settings.toml fields
 | Field Name | Description |
-|--|--|--|
+|--|--|
 |**User Settings**||
 | WIFI_NAME | SSID of the wifi network |
 | WIFI_PASSWORD| Password of the wifi network |
