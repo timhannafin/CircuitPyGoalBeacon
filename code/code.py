@@ -58,7 +58,7 @@ def configValid(logger):
             err_string = err_string + '-SYNC_TIMEZONE_WITH_API IS "True" BUT TIMEZONE_API_KEY MISSING OR NOT SET\n'
 
     if err_string != '':
-        logger.info(f'Config File invalid:\n{err_string}')
+        logger.error(f'settings.toml File invalid:\n{err_string}')
         return False
 
     return True
