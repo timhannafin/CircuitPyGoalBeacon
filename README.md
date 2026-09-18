@@ -120,28 +120,28 @@ Copy the contents of the code directory onto your board. I have found that files
 Your display should now show an error message that the settings.toml is invalid due to missing wifi credentials. Open your **CIRCUITPY** drive and then open the settings.toml file in a text editor. Fill in the required blank fields, you should also take this opportunity to set your desired custom settings.
 
 #### settings.toml fields
-| Field Name | Description | Required |
+| Field Name | Description |
 |--|--|--|
-|**User Settings**|||
-| WIFI_NAME | SSID of the wifi network | Yes |
-| WIFI_PASSWORD| Password of the wifi network | Yes |
-| LOCAL_TIME_ZONE| Local timezone IANA designation | Yes |
-| WATCH_TEAM_CODE| The team code you want to track. See "teams.md" for a full list | Yes |
-| COUNTRY_CODE| Either "US" or "CA". Used when determining which tv channels are available to you. | Yes |
-| LOCAL_TIMEZONE_OFFSET| Time in seconds that your local timezone is offset from UTC | Yes |
-| TV_CHANNEL_LIST| A comma separated filter list for TV channels. If this is blank, the local and/or national broadcast for your team will be displayed. If it is set, only channels in the list will be displayed.| No |
-| COUNTRY_CODE| Either "US" or "CA". Used when determining which tv channels are available to you. | Yes |
-|**Advanced Settings**|||
-| GOAL_ALERT_LENGTH | The number of seconds the light will remain on after a goal is scored | Yes |
-| GOAL_ALERT_COLOR_1 | Background/text color of the "Goal!" sprint that flashes on the display. | Yes |
-| GOAL_ALERT_COLOR_2 | Alternate background/text color of the "Goal!" sprint that flashes on the display. | Yes |
+|**User Settings**||
+| WIFI_NAME | SSID of the wifi network |
+| WIFI_PASSWORD| Password of the wifi network |
+| LOCAL_TIME_ZONE| Local timezone IANA designation |
+| WATCH_TEAM_CODE| The team code you want to track. See "teams.md" for a full list |
+| COUNTRY_CODE| Either "US" or "CA". Used when determining which tv channels are available to you. |
+| LOCAL_TIMEZONE_OFFSET| Time in seconds that your local timezone is offset from UTC |
+| TV_CHANNEL_LIST| A comma separated filter list for TV channels. If this is blank, the local and/or national broadcast for your team will be displayed. If it is set, only channels in the list will be displayed.|
+| COUNTRY_CODE| Either "US" or "CA". Used when determining which tv channels are available to you. |
+|**Advanced Settings**||
+| GOAL_ALERT_LENGTH | The number of seconds the light will remain on after a goal is scored |
+| GOAL_ALERT_COLOR_1 | Background/text color of the "Goal!" sprint that flashes on the display. |
+| GOAL_ALERT_COLOR_2 | Alternate background/text color of the "Goal!" sprint that flashes on the display. | 
 | SYNC_TIMEZONE_WITH_API | If "False" then the LOCAL_TIMEZONE_OFFSET will be used to determine the local time. If "True" we will attempt to synchronize the offset using an external API. This is useful to adjust for daylight savings changes automatically. | Yes |
-| TIMEZONE_API | The timezone API to use if SYNC_TIMEZONE_WITH_API is "True". Only the current default value has been tested at this time.  | Yes |
-| TIMEZONE_API_KEY | The API key required to access the timezone API. This can be acquired by registering an account at https://rapidapi.com/sleeyax/api/world-time-api3 | Yes |
-|**Developer Settings**|||
-| NTP_SERVER_LIST | Comma separated list of NTP servers to try in order when initializing the current time.| Yes |
-| API_BASE | The root url for the NHL data API| Yes |
-| TIME_DEBUG_MODE | If "False" execute normally. If "True" the SYNC_TIMEZONE_WITH_API is ignored and assumed "False". This is useful if you are resetting frequently as during development and don't want to wait for this sync.| Yes |
-| GAME_WATCH_DEBUG_MODE | If "False" execute normally. If "True" the next scheduled game will have it's start time changed to start immediately and goals will automatically be triggered every few seconds. This is useful for debugging game events without waiting for a game to start.| Yes |
+| TIMEZONE_API | The timezone API to use if SYNC_TIMEZONE_WITH_API is "True". Only the current default value has been tested at this time.  |
+| TIMEZONE_API_KEY | The API key required to access the timezone API. This can be acquired by registering an account at https://rapidapi.com/sleeyax/api/world-time-api3 |
+|**Developer Settings**||
+| NTP_SERVER_LIST | Comma separated list of NTP servers to try in order when initializing the current time.|
+| API_BASE | The root url for the NHL data API|
+| TIME_DEBUG_MODE | If "False" execute normally. If "True" the SYNC_TIMEZONE_WITH_API is ignored and assumed "False". This is useful if you are resetting frequently as during development and don't want to wait for this sync.|
+| GAME_WATCH_DEBUG_MODE | If "False" execute normally. If "True" the next scheduled game will have it's start time changed to start immediately and goals will automatically be triggered every few seconds. This is useful for debugging game events without waiting for a game to start.|
 
 ### Final Assembly
