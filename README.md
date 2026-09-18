@@ -41,7 +41,7 @@ Things should now look like this with two black wires soldered to the left side 
 
 ### Electronics Assembly
 The overall layout of the connections can be seen here. 
-![Graphical representation of the instructions listed below](https://github.com/timhannafin/CircuitPyGoalBeacon/blob/images/goal_beacon_bb.png)
+![Graphical representation of the instructions listed below](/images/goal_beacon_bb.png)
 
 1. Using the male end of the 6-pin connector set, solder the wires to the QT Py board in this configuration:
 
@@ -84,16 +84,16 @@ The overall layout of the connections can be seen here.
 9. Finally, complete the circuit by connecting the light's black wire to the transistor's drain (center) pin.
 
 At this point, your components should look something like this:
-![Photo of the fully wired microprocessor board](https://github.com/timhannafin/CircuitPyGoalBeacon/blob/images/QT_Py_wired.jpg)
+![Photo of the fully wired microprocessor board](/images/QT_Py_wired.jpg)
 ![Photo of the fully wired display board](/images/Display_wired.jpg)
-![Photo of the fully wired light with the transistor attached](images/Light_with_transistor.jpg)
+![Photo of the fully wired light with the transistor attached](/images/Light_with_transistor.jpg)
 
 6. Connect the two ends of the 3-pin connector.
 
 7. Thread the USB cable through the hole that was previously used by the tab on the battery compartment lid and tie a loose knot for strain relief. Connect it to the UBC-C port on the QT Py board.
 
 8. Thread the male end of the 7-pin connector through the hole in the base left by the switch we removed so that the display sits outside. 
-![Photo of the fully wired light with the transistor attached](/images/Display inserted through base.jpg)
+![Photo of the fully wired light with the transistor attached](/images/Display_inserted_through_base.jpg)
 
 9. Connect the two ends of the 7-pin connector.
  
