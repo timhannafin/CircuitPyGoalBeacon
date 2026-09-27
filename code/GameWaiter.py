@@ -101,14 +101,13 @@ class GameWaiter:
             for tv_broadcast in self.game['tvBroadcasts']:
                 if tv_broadcast['market'] == tv_market:
                     channel_list.append(tv_broadcast['network'])
-                if tv_broadcast['market'] == 'N' and tv_broadcast['countryCode']==CONFIG.COUNTRY_CODE:
-                    channel_list.append(tv['network'])
+                if tv_broadcast['market'] == 'N' and tv_broadcast['countryCode']==os.getenv(CONFIG.COUNTRY_CODE):
+                    channel_list.append(tv_broadcast['network'])
         else:                                                    #channel white list is defined, only show channels from the list
             channel_white_list = [channel.strip().lower() for channel in channel_white_list.split(',')]
             for tv_broadcast in self.game['tvBroadcasts']:
                 if tv_broadcast['network'].lower() in channel_white_list:
                     channel_list.append(tv_broadcast['network'])
-
 
         tv_string = ''
         if len(channel_list) > 0:
