@@ -1,3 +1,4 @@
+
 # CircuitPyGoalBeacon
 
 ## Parts List
@@ -12,8 +13,7 @@
 - [1.25mm Pitch 6-pin Cable Matching Pair](https://www.adafruit.com/product/4986)
 - [1.25mm Pitch 3-pin Cable Matching Pair](https://www.adafruit.com/product/4721)
 - [Cutting board feet](https://www.amazon.com/dp/B0D97B6VCN)
-- [USB-C Cable](https://www.adafruit.com/product/5788)
-- [Brass M2.5 Standoffs](https://www.amazon.com/dp/B01L06CUJG) *Note: I happened to already have this kit on-hand when I built the prototype. We only need 2x5mm M2.5 brass standoffs and 2xM2.5 nuts for this project. If you are able to source those affordably without ordering the entire kit, it may be a better option.*
+- [USB-C Cable with flexible connector](https://www.amazon.com/dp/B0DQSJHLDM)
 
 ### Tools
 - Phillips head screwdriver
@@ -84,7 +84,7 @@ The overall layout of the connections can be seen here.
 9. Finally, complete the circuit by connecting the light's black wire to the transistor's drain (center) pin.
 
 At this point, your components should look something like this:
-![Photo of the fully wired microprocessor board](/images/QT_Py_wired.jpg)
+![Photo of the fully wired microprocessor board](/images/QTPy_wired.jpg)
 ![Photo of the fully wired display board](/images/Display_wired.jpg)
 ![Photo of the fully wired light with the transistor attached](/images/Light_with_transistor.jpg)
 
@@ -116,7 +116,7 @@ CircuitPython version 10 or higher is required to run this project. Use the [Cir
 #### 2.  Upload the Code
 Copy the contents of the code directory onto your board. I have found that files may get corrupted if I try to transfer too many at once, so you may want to do this one file at a time.
 
-### User Configuration
+## User Configuration
 Your display should now show an error message that the settings.toml is invalid due to missing wifi credentials. Open your **CIRCUITPY** drive and then open the settings.toml file in a text editor. Fill in the required blank fields, you should also take this opportunity to set your desired custom settings.
 
 #### settings.toml fields
@@ -145,3 +145,23 @@ Your display should now show an error message that the settings.toml is invalid 
 | GAME_WATCH_DEBUG_MODE | If "False" execute normally. If "True" the next scheduled game will have it's start time changed to start immediately and goals will automatically be triggered every few seconds. This is useful for debugging game events without waiting for a game to start.|
 
 ### Final Assembly
+At this point, the light should be fully functional and the display should be lit and not showing any errors. If that's the case, it's time to put everything back together permanently. Unplug the usb from the power source again and finish the assembly.
+
+1. Use a spot of hot glue to fix the QT Py and transistor to the raised flat part of the inside of the base.
+
+![Photo of the internal control components glued in place](/images/internal_components_glued.jpg)
+
+2. Carefully push the display wires back through the hole on the base until the display is flush with the surface. Use hot glue to affix the display to the outside of the base.
+
+![Photo of the display glued in place](/images/display_glued.jpg)
+
+3. Use hot glue to attach three of the cutting board feet to the bottom of the light base. These provide clearance for the usb cable.
+
+![Photo of the feet glued in place](/images/feet_glued.jpg)
+
+4. Plug the light back into your power source one more time to make sure everything still works as expected. It's very easy to knock something loose during these last few steps. Make sure all the electrical connections are in place and secure and that the drive bands are sill in place around the pulleys and motor.
+5. Slide the top and bottom of the light casting back together carefully arranging your wires so they don't interfere with the motor drive. Make sure the screw holes on the bottom align with the ones on the top.
+6. Replace the screws the you previously removed from the battery compartment. The top and bottom sections of the base should now be securely attached.
+7. Place the reflector back on the stalk.
+8. Place the dome back on top of the light and line up the screw holes.
+9. Replace the screws in the dome.
