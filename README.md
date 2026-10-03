@@ -2,7 +2,7 @@
 # CircuitPyGoalBeacon
 
 ## Introduction
-![Looping video of the completed project showing a goal celebration](/images/GOAL.mp4)
+https://github.com/user-attachments/assets/6040117e-f4fc-4cfd-b34b-3137255885b2
 
 
 ## Parts List
