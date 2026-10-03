@@ -2,7 +2,7 @@
 # CircuitPyGoalBeacon
 
 ## Introduction
-https://github.com/user-attachments/assets/6040117e-f4fc-4cfd-b34b-3137255885b2
+![Looping animation of the completed project in a goal celebration state](/images/GOAL.gif)
 
 
 ## Parts List
