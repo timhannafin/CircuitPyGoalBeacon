@@ -2,6 +2,13 @@
 # CircuitPyGoalBeacon
 
 ## Introduction
+
+CircuitPyGoalBeacon is a project implemented in CircuitPython that consumes the NHL public API to alert when the user's configured team scores a goal during a game. When the configured team is not currently playing a game, it will retrieve the team's schedule information and display the next game (up to 3 weeks out), the start time, and which TV channel will carry the broadcast. 
+
+The project instructions and code here are written for the Adafruit QT Py board, but any board that supports CircuitPython should be able to use this code with only minor changes.
+
+
+![Completed project in the waiting state](/images/completed_waiting.jpg)
 ![Looping animation of the completed project in a goal celebration state](/images/GOAL.gif)
 
 
