@@ -1,6 +1,10 @@
 
 # CircuitPyGoalBeacon
 
+## Introduction
+![Looping video of the completed project showing a goal celebration](/images/GOAL.mp4)
+
+
 ## Parts List
 
 ### Electronics
