@@ -7,9 +7,9 @@ CircuitPyGoalBeacon is a project implemented in CircuitPython that consumes the 
 
 The project instructions and code here are written for the Adafruit QT Py board, but any board that supports CircuitPython should be able to use this code with only minor changes.
 
+<img src="/images/completed_waiting.jpg" width="300" alt="Completed project in the waiting state" />
 
-![Completed project in the waiting state](/images/completed_waiting.jpg)
-![Looping animation of the completed project in a goal celebration state](/images/GOAL.gif)
+<img src="/images/GOAL.gif" width="300" alt="Looping animation of the completed project in a goal celebration state" />
 
 
 ## Parts List
