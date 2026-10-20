@@ -12,6 +12,7 @@ The project instructions and code here are written for the Adafruit QT Py board,
 <img src="/images/GOAL.gif" width="300" alt="Looping animation of the completed project in a goal celebration state" />
 
 
+
 ## Parts List
 
 ### Electronics
@@ -49,6 +50,8 @@ The project instructions and code here are written for the Adafruit QT Py board,
 9. Using one of the black leads you clipped off the switch earlier, solder one end to the left terminal of the motor and leave the other side loose.
 
 Things should now look like this with two black wires soldered to the left side of the motor and two red wires soldered to the right side.
+![Photo of the wiring modifications made to the light internals](/images/light_setup.jpg)
+
 
 ### Electronics Assembly
 The overall layout of the connections can be seen here. 
