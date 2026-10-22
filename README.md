@@ -68,7 +68,7 @@ The overall layout of the connections can be seen here.
 | White | A0|
 | Yellow | A1|
 
-3. Next we'll be connecting the male end of the 3-pin connector. In the diagram above, the third wire of this connector is shown as orange, but it may be another color such as yellow or blue on yours. It will be whichever wire isn't red or black. Solder the wires to the QA Py board in this configuration:
+2. Next we'll be connecting the male end of the 3-pin connector. In the diagram above, the third wire of this connector is shown as orange, but it may be another color such as yellow or blue on yours. It will be whichever wire isn't red or black. Solder the wires to the QA Py board in this configuration:
 
 |Color|Pin label  |
 |--|--|
@@ -76,7 +76,7 @@ The overall layout of the connections can be seen here.
 | Black | GND |
 | Orange | A2|
 
-5. Now we'll attach the female end of the 6-pin connector to the display. Solder the wires to the pins in this configuration:
+3. Now we'll attach the female end of the 6-pin connector to the display. Solder the wires to the pins in this configuration:
 
 |Color|Pin label  |
 |--|--|
@@ -87,7 +87,7 @@ The overall layout of the connections can be seen here.
 | White | TFTCS|
 | Yellow | DC|
 
-7. Next we'll attach the female end of the 3-pin connector like this. Apply shrink tube or electrical tape to these connections to avoid shorts.
+4. Next we'll attach the female end of the 3-pin connector like this. Apply shrink tube or electrical tape to these connections to avoid shorts.
 
 | Color | Pin label  |
 |--|--|
@@ -95,7 +95,7 @@ The overall layout of the connections can be seen here.
 | Black | NPN Transistor base (rightmost) pin|
 | Orange | NPN Gate (leftmost) pin |
 
-9. Finally, complete the circuit by connecting the light's black wire to the transistor's drain (center) pin.
+5. Finally, complete the circuit by connecting the light's black wire to the transistor's drain (center) pin.
 
 At this point, your components should look something like this:
 ![Photo of the fully wired microprocessor board](/images/QTPy_wired.jpg)
