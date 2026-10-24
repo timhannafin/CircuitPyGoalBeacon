@@ -60,6 +60,8 @@ class GameWaiter:
                     self.display.setDisplayGameTimeText('In Progress')
                     watcher = GameWatcher(self.display, self.game, self.team, self.apiRequest, logger=self.logger, debug=self.debug)
                     watcher.Watch()
+                    self.display.showInfo()
+                    return
 
             time.sleep(sleep_time)
             self.setGame( self.getNextGame() )
@@ -108,6 +110,7 @@ class GameWaiter:
             for tv_broadcast in self.game['tvBroadcasts']:
                 if tv_broadcast['network'].lower() in channel_white_list:
                     channel_list.append(tv_broadcast['network'])
+
 
         tv_string = ''
         if len(channel_list) > 0:

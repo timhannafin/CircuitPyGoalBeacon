@@ -24,11 +24,17 @@ class GameWatcher:
         if self.logger:
             self.logger.info(f'Watcher started.')
 
+
+        self.display.showLiveGameDisplay()
+        self.display.setHomeTeam(self.game['homeTeam']['abbrev'])
+        self.display.setAwayTeam(self.game['awayTeam']['abbrev'])
         self.active = True
         while self.active:
             #self.readScoreFromBoxScore()
             self.readScoreFromSchedule()
-
+            self.display.setHomeScore(self.game['homeTeam']['score'] if 'score' in self.game['homeTeam'] else 0)
+            self.display.setAwayScore(self.game['awayTeam']['score'] if 'score' in self.game['awayTeam'] else 0)
+            self.display.setPeriod( self.game['periodDescriptor']['number'] if 'number' in self.game['periodDescriptor'] else 1)
             if self.game_state == 'FINAL':
                 return
             time.sleep(1)
@@ -52,10 +58,10 @@ class GameWatcher:
     def readScoreFromSchedule(self):
         schedule = self.apiRequest.requestJson(self.schedule_api_url)
         if schedule != None:
-            game = schedule['games'][0]
-            latestScore = game[self.home_away_designator]['score'] if 'score' in game[self.home_away_designator] else 0
+            self.game = schedule['games'][0]
+            latestScore = self.game[self.home_away_designator]['score'] if 'score' in self.game[self.home_away_designator] else 0
             self.processScore(latestScore)
-            self.game_state = game['gameState']
+            self.game_state = self.game['gameState']
         return
 
     def readScoreFromBoxScore(self):

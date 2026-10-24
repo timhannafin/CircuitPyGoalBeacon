@@ -25,15 +25,15 @@ class Display:
         self.text_color = 0xFFFFFF
         self.background_color = 0x000000
         self.font = bitmap_font.load_font("/fonts/Helvetica-Bold-16.bdf")
+        self.large_font = bitmap_font.load_font("/fonts/FiraSans-Numerals-ExtraBold-68.bdf")
         self.led = digitalio.DigitalInOut(board.A2)
         self.led.direction = digitalio.Direction.OUTPUT
         self.GOAL_ALERT_COLOR_1 = os.getenv(CONFIG.GOAL_ALERT_COLOR_1)
         self.GOAL_ALERT_COLOR_2 = os.getenv(CONFIG.GOAL_ALERT_COLOR_2)
+        self.live_display_group = None
         return
 
     def init(self):
-        TEXT_COLOR = 0xFFFF00
-
         # Release any resources currently in use for the displays
         displayio.release_displays()
 
@@ -64,7 +64,6 @@ class Display:
         self.display_group.append(self.time_label)
         self.display_group.append(self.tv_label)
 
-
         bitmap, self.alertPalette = adafruit_imageload.load(
             "sprites/goal_sprite.bmp",
             bitmap=displayio.Bitmap,
@@ -74,11 +73,90 @@ class Display:
         tile_grid = displayio.TileGrid(bitmap, pixel_shader=self.alertPalette)
         self.alert_group.append(tile_grid)
         self.led.value = False
+
+        self.initLiveGameDisplay()
         return
 
+    def initLiveGameDisplay(self):
+        self.live_display_group = displayio.Group()
+        self.game_label_background_rectangle = Rect(0, 0, self.displayWidth, math.floor(self.displayHeight*.25), fill=0xFFFF00)
+        self.live_display_group.append(self.game_label_background_rectangle)
+
+        self.home_team_label = label.Label(self.font, text='###', color=0x000000)
+        self.home_team_label.anchor_point = (0.5, 0.0)
+        self.home_team_label.anchored_position = (self.displayWidth/4, 10)
+
+        self.away_team_label = label.Label(self.font, text='###', color=0x000000)
+        self.away_team_label.anchor_point = (0.5, 0.0)
+        self.away_team_label.anchored_position = (self.displayWidth-(self.displayWidth/4), 10)
+
+
+        self.home_score_label = label.Label(self.large_font, text='0', color=self.text_color)
+        self.home_score_label.anchor_point = (0.5, 0.0)
+        self.home_score_label.anchored_position = ((self.displayWidth/4), 50)
+
+        self.away_score_label = label.Label(self.large_font, text='0', color=self.text_color)
+        self.away_score_label.anchor_point = (0.5, 0.0)
+        self.away_score_label.anchored_position = (self.displayWidth-(self.displayWidth/4), 50)
+
+        period_label = label.Label(self.font, text='Per:', color=self.text_color)
+        period_label.anchor_point = (0.0, 1.0)
+        period_label.anchored_position = (10, self.displayHeight-10)
+
+        self.period_number_label = label.Label(self.font, text='1', color=self.text_color)
+        self.period_number_label.anchor_point = (0.0, 1.0)
+        self.period_number_label.anchored_position = (50, self.displayHeight-10)
+
+        self.live_tv_label = label.Label(self.font, text='', color=self.text_color)
+        self.live_tv_label.anchor_point = (1.0, 1.0)
+        self.live_tv_label.anchored_position = (self.displayWidth, self.displayHeight-10)
+
+        self.live_display_group.append(self.home_team_label)
+        self.live_display_group.append(self.away_team_label)
+        self.live_display_group.append(self.home_score_label)
+        self.live_display_group.append(self.away_score_label)
+        self.live_display_group.append(period_label)
+        self.live_display_group.append(self.period_number_label)
+        self.live_display_group.append(self.live_tv_label)
+
+        return
+
+    def setHomeScore(self, score):
+        if not isinstance(score, str):
+            score = str(score)
+        self.home_score_label.text = score
+        return
+
+    def setAwayScore(self, score):
+        if not isinstance(score, str):
+            score = str(score)
+        self.away_score_label.text = score
+        return
+
+    def setHomeTeam(self, team):
+        self.home_team_label.text = team
+        return
+
+    def setAwayTeam(self, team):
+        self.away_team_label.text = team
+        return
+
+    def setPeriod(self, period_number):
+        if period_number < 4:
+            period = str(period_number)
+        else:
+            period = 'OT'
+
+        self.period_number_label.text = period
+        return
+
+    def showLiveGameDisplay(self):
+        self.display.root_group = self.live_display_group
+        return
 
     def showInfo(self):
         self.display.root_group = self.display_group
+        return
 
     def showGoalAlert(self):
         self.led.value = True
@@ -91,7 +169,7 @@ class Display:
             self.alertPalette[0]=self.GOAL_ALERT_COLOR_2
             time.sleep(.25)
         self.led.value = False
-        self.showInfo()
+        self.showLiveGameDisplay()
         pass
 
     def getDateDisplayString(self, display_datetime):
@@ -124,6 +202,7 @@ class Display:
 
     def setDisplayTVString(self, value):
         self.tv_label.text = value
+        self.live_tv_label.text = value
         return
 
     def setBeaconValue(self, value):
