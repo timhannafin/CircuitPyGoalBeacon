@@ -46,7 +46,7 @@ class GameWaiter:
             if self.game != None:
                 sleep_time = 60 #default 1 minute
                 self.logger.info(f'Next game starts at {self.start_time}')
-                if self.game['gameState'] in ['FUT']:
+                if self.game['gameState'] in ['FUT', 'PRE']:
                     utcTime = datetime.now().replace(tzinfo=timezone.utc)
                     gameStartDelta = (self.start_time - utcTime)
 
