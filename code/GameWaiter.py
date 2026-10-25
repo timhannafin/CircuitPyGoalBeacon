@@ -48,11 +48,14 @@ class GameWaiter:
                 self.logger.info(f'Next game starts at {self.start_time}')
                 if self.game['gameState'] in ['FUT', 'PRE']:
                     utcTime = datetime.now().replace(tzinfo=timezone.utc)
-                    gameStartDelta = (self.start_time - utcTime)
+                    if self.start_time > utcTime:
+                        gameStartDelta = (self.start_time - utcTime)
+                        if self.logger: self.logger.info(f'Game starts in {gameStartDelta}')
+                        sleep_time = round(gameStartDelta.seconds * .25) #sleep for 25% of the interval until the next game
+                    else:
+                        #we have passed the scheduled start time, check every 5 seconds
+                        sleep_time = 5
 
-                    if self.logger: self.logger.info(f'Game starts in {gameStartDelta}')
-
-                    sleep_time = round(gameStartDelta.seconds * .25) #sleep for 25% of the interval until the next game
                     if self.logger: self.logger.info(f'Sleep for {sleep_time} seconds')
                 else:
                     if self.logger: self.logger.info(f'{utcTime} Game is live')
