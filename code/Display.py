@@ -1,6 +1,7 @@
 from adafruit_datetime import datetime, date
 from adafruit_bitmap_font import bitmap_font
 from adafruit_display_shapes.rect import Rect
+from adafruit_display_shapes.line import Line
 from adafruit_display_text import label
 from adafruit_st7789 import ST7789
 import adafruit_imageload
@@ -79,7 +80,7 @@ class Display:
 
     def initLiveGameDisplay(self):
         self.live_display_group = displayio.Group()
-        self.game_label_background_rectangle = Rect(0, 0, self.displayWidth, math.floor(self.displayHeight*.25), fill=0xFFFF00)
+        self.game_label_background_rectangle = Rect(x=0, y=0, width=self.displayWidth, height=math.floor(self.displayHeight*.25), fill=0xFFFF00)
         self.live_display_group.append(self.game_label_background_rectangle)
 
         self.home_team_label = label.Label(self.font, text='###', color=0x000000)
@@ -111,6 +112,7 @@ class Display:
         self.live_tv_label.anchor_point = (1.0, 1.0)
         self.live_tv_label.anchored_position = (self.displayWidth, self.displayHeight-10)
 
+
         self.live_display_group.append(self.home_team_label)
         self.live_display_group.append(self.away_team_label)
         self.live_display_group.append(self.home_score_label)
@@ -118,6 +120,31 @@ class Display:
         self.live_display_group.append(period_label)
         self.live_display_group.append(self.period_number_label)
         self.live_display_group.append(self.live_tv_label)
+
+        #Decorators
+        score_box = Rect(
+            x=0,y=math.floor(self.displayHeight*.25)-1,
+            width=math.floor(self.displayWidth*.5),
+            height=self.displayHeight-60,
+            fill=None,
+            outline=0xFFFF00)
+        self.live_display_group.append(score_box)
+
+        score_box = Rect(
+            x=math.floor(self.displayWidth*.5),
+            y=math.floor(self.displayHeight*.25)-1,
+            width=math.floor(self.displayWidth*.5),
+            height=self.displayHeight-60,
+            fill=None, outline=0xFFFF00)
+        self.live_display_group.append(score_box)
+
+        team_label_divider = Rect(
+            x=math.floor(self.displayWidth*.5)-1,
+            y=0,
+            width=3,
+            height=math.floor(self.displayHeight*.25),
+            fill=0x000000, outline=0x000000)
+        self.live_display_group.append(team_label_divider)
 
         return
 
