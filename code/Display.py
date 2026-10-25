@@ -21,7 +21,7 @@ class Display:
         self.displayHeight = 135
         self.displayWidth = 240
 
-        self.display_group = displayio.Group()
+        self.idle_display_group = displayio.Group()
         self.alert_group = displayio.Group()
         self.text_color = 0xFFFFFF
         self.background_color = 0x000000
@@ -31,7 +31,7 @@ class Display:
         self.led.direction = digitalio.Direction.OUTPUT
         self.GOAL_ALERT_COLOR_1 = os.getenv(CONFIG.GOAL_ALERT_COLOR_1)
         self.GOAL_ALERT_COLOR_2 = os.getenv(CONFIG.GOAL_ALERT_COLOR_2)
-        self.live_display_group = None
+        self.live_display_group = displayio.Group()
         return
 
     def init(self):
@@ -44,8 +44,24 @@ class Display:
             display_bus, rotation=270, width=240, height=135, rowstart=40, colstart=53
         )
 
+
+
+        bitmap, self.alertPalette = adafruit_imageload.load(
+            "sprites/goal_sprite.bmp",
+            bitmap=displayio.Bitmap,
+            palette=displayio.Palette
+        )
+        self.alert_group = group = displayio.Group()
+        tile_grid = displayio.TileGrid(bitmap, pixel_shader=self.alertPalette)
+        self.alert_group.append(tile_grid)
+        self.led.value = False
+
+        self.initIdleDisplay()
+        self.initLiveGameDisplay()
+        return
+
+    def initIdleDisplay(self):
         self.game_label_background_rectangle = Rect(0, 0, self.displayWidth, math.floor(self.displayHeight*.25), fill=0xFFFF00)
-        self.display_group.append(self.game_label_background_rectangle)
 
         placeholder_text = '#' * 25
 
@@ -61,23 +77,11 @@ class Display:
         self.tv_label.anchor_point = (0.0, 0.0)
         self.tv_label.anchored_position = (10, 95)
 
-        self.display_group.append(self.game_label)
-        self.display_group.append(self.time_label)
-        self.display_group.append(self.tv_label)
-
-        bitmap, self.alertPalette = adafruit_imageload.load(
-            "sprites/goal_sprite.bmp",
-            bitmap=displayio.Bitmap,
-            palette=displayio.Palette
-        )
-        self.alert_group = group = displayio.Group()
-        tile_grid = displayio.TileGrid(bitmap, pixel_shader=self.alertPalette)
-        self.alert_group.append(tile_grid)
-        self.led.value = False
-
-        self.initLiveGameDisplay()
+        self.idle_display_group.append(self.game_label_background_rectangle)
+        self.idle_display_group.append(self.game_label)
+        self.idle_display_group.append(self.time_label)
+        self.idle_display_group.append(self.tv_label)
         return
-
     def initLiveGameDisplay(self):
         self.live_display_group = displayio.Group()
         self.game_label_background_rectangle = Rect(x=0, y=0, width=self.displayWidth, height=math.floor(self.displayHeight*.25), fill=0xFFFF00)
@@ -181,8 +185,8 @@ class Display:
         self.display.root_group = self.live_display_group
         return
 
-    def showInfo(self):
-        self.display.root_group = self.display_group
+    def showIdleDisplay(self):
+        self.display.root_group = self.idle_display_group
         return
 
     def showGoalAlert(self):

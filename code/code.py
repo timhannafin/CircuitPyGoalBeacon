@@ -140,7 +140,7 @@ def main():
             pass
 
     while True:
-        d.showInfo()
+        d.showIdleDisplay()
         global localTz
         waiter = GameWaiter(d, os.getenv(CONFIG.WATCH_TEAM_CODE), apiRequest=apiRequest, local_tz=local_tz, logger=logger, debug= os.getenv(CONFIG.GAME_WATCH_DEBUG_MODE)==CONFIG_VALUES.true)
         waiter.Wait()

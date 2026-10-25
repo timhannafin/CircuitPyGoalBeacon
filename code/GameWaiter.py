@@ -63,7 +63,7 @@ class GameWaiter:
                     self.display.setDisplayGameTimeText('In Progress')
                     watcher = GameWatcher(self.display, self.game, self.team, self.apiRequest, logger=self.logger, debug=self.debug)
                     watcher.Watch()
-                    self.display.showInfo()
+                    self.display.showIdleDisplay()
                     return
 
             time.sleep(sleep_time)
