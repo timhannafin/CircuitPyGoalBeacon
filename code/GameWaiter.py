@@ -46,13 +46,16 @@ class GameWaiter:
             if self.game != None:
                 sleep_time = 60 #default 1 minute
                 self.logger.info(f'Next game starts at {self.start_time}')
-                if self.game['gameState'] in ['FUT']:
+                if self.game['gameState'] in ['FUT', 'PRE']:
                     utcTime = datetime.now().replace(tzinfo=timezone.utc)
-                    gameStartDelta = (self.start_time - utcTime)
+                    if self.start_time > utcTime:
+                        gameStartDelta = (self.start_time - utcTime)
+                        if self.logger: self.logger.info(f'Game starts in {gameStartDelta}')
+                        sleep_time = round(gameStartDelta.seconds * .25) #sleep for 25% of the interval until the next game
+                    else:
+                        #we have passed the scheduled start time, check every 5 seconds
+                        sleep_time = 5
 
-                    if self.logger: self.logger.info(f'Game starts in {gameStartDelta}')
-
-                    sleep_time = round(gameStartDelta.seconds * .25) #sleep for 25% of the interval until the next game
                     if self.logger: self.logger.info(f'Sleep for {sleep_time} seconds')
                 else:
                     if self.logger: self.logger.info(f'{utcTime} Game is live')
@@ -60,6 +63,8 @@ class GameWaiter:
                     self.display.setDisplayGameTimeText('In Progress')
                     watcher = GameWatcher(self.display, self.game, self.team, self.apiRequest, logger=self.logger, debug=self.debug)
                     watcher.Watch()
+                    self.display.showIdleDisplay()
+                    return
 
             time.sleep(sleep_time)
             self.setGame( self.getNextGame() )
@@ -108,6 +113,7 @@ class GameWaiter:
             for tv_broadcast in self.game['tvBroadcasts']:
                 if tv_broadcast['network'].lower() in channel_white_list:
                     channel_list.append(tv_broadcast['network'])
+
 
         tv_string = ''
         if len(channel_list) > 0:
