@@ -51,6 +51,8 @@ class GameWatcher:
             if latestScore > self.team_score:
                 if self.logger:
                     self.logger.info(f'Goal Scored')
+                if os.getenv(CONFIG.GOAL_ALERT_DELAY) > 0:
+                    time.sleep(os.getenv(CONFIG.GOAL_ALERT_DELAY))
                 self.display.showGoalAlert()
                 self.team_score = latestScore
         return

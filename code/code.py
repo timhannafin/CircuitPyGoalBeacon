@@ -45,11 +45,15 @@ def configValid(logger):
     if os.getenv(CONFIG.GOAL_ALERT_COLOR_2)=='' or os.getenv(CONFIG.GOAL_ALERT_COLOR_2) is None:
         err_string = err_string + '-GOAL_ALERT_COLOR_2 MISSING OR NOT SET\n'
 
+    if not isinstance(os.getenv(CONFIG.GOAL_ALERT_DELAY),int) or os.getenv(CONFIG.GOAL_ALERT_DELAY) is None:
+        err_string = err_string + '-GOAL_ALERT_DELAY MISSING OR NOT SET\n'
+
     if not os.getenv(CONFIG.LOCAL_TIMEZONE_OFFSET) or os.getenv(CONFIG.LOCAL_TIMEZONE_OFFSET) is None:
         err_string = err_string + '-LOCAL_TIMEZONE_OFFSET MISSING OR NOT SET\n'
 
     if not os.getenv(CONFIG.SYNC_TIMEZONE_WITH_API) or os.getenv(CONFIG.SYNC_TIMEZONE_WITH_API) is None:
         err_string = err_string + '-SYNC_TIMEZONE_WITH_API MISSING OR NOT SET\n'
+
 
     if os.getenv(CONFIG.SYNC_TIMEZONE_WITH_API)==CONFIG_VALUES.true:
         if not os.getenv(CONFIG.TIMEZONE_API) or os.getenv(CONFIG.TIMEZONE_API) is None:
