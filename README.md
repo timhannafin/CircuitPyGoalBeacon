@@ -149,6 +149,7 @@ Your display should now show an error message that the settings.toml is invalid 
 | GOAL_ALERT_LENGTH | The number of seconds the light will remain on after a goal is scored |
 | GOAL_ALERT_COLOR_1 | Background/text color of the "Goal!" sprint that flashes on the display. |
 | GOAL_ALERT_COLOR_2 | Alternate background/text color of the "Goal!" sprint that flashes on the display. | 
+| GOAL_ALERT_DELAY | The number of seconds to delay the alert after a goal is detected. Useful for buffered streams or delayed broadcasts. |
 | SYNC_TIMEZONE_WITH_API | If "False" then the LOCAL_TIMEZONE_OFFSET will be used to determine the local time. If "True" we will attempt to synchronize the offset using an external API. This is useful to adjust for daylight savings changes automatically. | Yes |
 | TIMEZONE_API | The timezone API to use if SYNC_TIMEZONE_WITH_API is "True". Only the current default value has been tested at this time.  |
 | TIMEZONE_API_KEY | The API key required to access the timezone API. This can be acquired by registering an account at https://rapidapi.com/sleeyax/api/world-time-api3 |
