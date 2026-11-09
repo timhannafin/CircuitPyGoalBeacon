@@ -68,8 +68,18 @@ def setup(logger, apiRequest, debug=False):
         return False
 
     ssid = os.getenv(CONFIG.WIFI_NAME)
-    logger.info(f'Connecting to {ssid}...')
-    wifi.radio.connect(ssid, os.getenv(CONFIG.WIFI_PASSWORD))
+
+    while 1==1:
+        try:
+            logger.info(f'Connecting to {ssid}...')
+            wifi.radio.connect(ssid, os.getenv(CONFIG.WIFI_PASSWORD))
+            break;
+        except OSError as e:
+            logger.error(e)
+            logger.info(f'Unable to connect to {ssid}. Retrying in 60 seconds.')
+            time.sleep(60)
+
+
     logger.info(f'Connected to {ssid}')
     logger.info(f'My IP address is {wifi.radio.ipv4_address}')
 
